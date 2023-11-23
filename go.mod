@@ -1,8 +1,9 @@
 module gogin
 
-go 1.23
+go 1.21.0
 
 require (
+	github.com/astaxie/beego v1.12.3
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-ini/ini v1.67.0
 	github.com/jinzhu/gorm v1.9.16
@@ -10,7 +11,6 @@ require (
 )
 
 require (
-	github.com/astaxie/beego v1.12.3 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
@@ -23,7 +23,6 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
-	github.com/kr/pretty v0.1.0 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/lib/pq v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
@@ -41,6 +40,5 @@ require (
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
