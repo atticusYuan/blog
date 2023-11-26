@@ -1,18 +1,17 @@
 package v1
 
 import (
+	"github.com/astaxie/beego/validation"
+	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
 	"gogin/models"
 	"gogin/pkg/e"
 	"gogin/pkg/setting"
 	"gogin/pkg/util"
 	"net/http"
-
-	"github.com/astaxie/beego/validation"
-	"github.com/gin-gonic/gin"
-	"github.com/unknwon/com"
 )
 
-// 获取多个文章标签
+// GetTags 获取多个文章标签
 func GetTags(c *gin.Context) {
 	// 从请求参数中获取标签名
 	name := c.Query("name")
@@ -48,6 +47,7 @@ func GetTags(c *gin.Context) {
 }
 
 // 新增文章标签
+
 func AddTag(c *gin.Context) {
 
 	name := c.Query("name")
@@ -79,6 +79,7 @@ func AddTag(c *gin.Context) {
 }
 
 // 修改文章标签
+
 func EditTag(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 	name := c.Query("name")
@@ -124,6 +125,7 @@ func EditTag(c *gin.Context) {
 }
 
 // 删除文章标签
+
 func DeleteTag(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 

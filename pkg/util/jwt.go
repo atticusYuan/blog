@@ -1,10 +1,8 @@
 package util
 
 import (
-	"gogin/pkg/setting"
-	"time"
-
 	jwt "github.com/dgrijalva/jwt-go"
+	"gogin/pkg/setting"
 	// "github.com/EDDYCJY/go-gin-example/pkg/setting"
 )
 
@@ -22,16 +20,17 @@ func (t *Token) SignedString(key interface{}) 该方法内部生成签名字符�
 func (p *Parser) ParseWithClaims 用于解析鉴权的声明，方法内部主要是具体的解码和校验的过程，最终返回*Token
 func (m MapClaims) Valid() 验证基于时间的声明exp, iat, nbf，注意如果没有任何声明在令牌中，仍然会被认为是有效的。并且对于时区偏差没有计算方法
 */
+
 func GenerateToken(username, password string) (string, error) {
-	nowTime := time.Now()
-	expireTime := nowTime.Add(3 * time.Hour)
+	//nowTime := time.Now()
+	//expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
 		username,
 		password,
 		jwt.StandardClaims{
-			ExpiresAt: expireTime.Unix(),
-			Issuer:    "gin-blog",
+			//ExpiresAt: expireTime.Unix(),
+			Issuer: "gin-blog",
 		},
 	}
 

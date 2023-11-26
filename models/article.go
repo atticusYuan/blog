@@ -33,7 +33,7 @@ func GetArticleTotal(maps interface{}) (count int) {
 	return
 }
 
-// Preload是什么东西，为什么查询可以得出每一项的关联Tag？
+// GetArticles Preload是什么东西，为什么查询可以得出每一项的关联Tag？
 // Preload就是一个预加载器，它会执行两条 SQL，分别是SELECT * FROM blog_articles;和SELECT * FROM blog_tag WHERE id IN (1,2,3,4);
 // 那么在查询出结构后，gorm内部处理对应的映射逻辑，将其填充到Article的Tag中，会特别方便，并且避免了循环查询
 func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []Article) {
