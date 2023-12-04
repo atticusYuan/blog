@@ -16,7 +16,13 @@ paths:
       - description: CreatedBy
         in: query
         name: created_by
-        type: integer
+        required: true
+        type: string
+      - description: Token
+        in: query
+        name: token
+        required: true
+        type: string
       produces:
       - application/json
       responses:
