@@ -45,6 +45,7 @@ func GetArticles(pageNum int, pageSize int, maps interface{}) (articles []Articl
 // Article如何关联到Tag？
 // 1.Article有一个结构体成员是TagID，就是外键。gorm会通过类名+ID 的方式去找到这两个类之间的关联关系
 // 2.Article有一个结构体成员是Tag，就是我们嵌套在Article里的Tag结构体，我们可以通过Related进行关联查询
+
 func GetArticle(id int) (article Article) {
 	db.Where("id = ?", id).First(&article)
 	db.Model(&article).Related(&article.Tag)

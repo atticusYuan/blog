@@ -11,7 +11,7 @@ var (
 	LogSavePath = "runtime/logs/"
 	LogSaveName = "log"
 	LogFileExt  = "log"
-	TimeFormat  = "20070102"
+	TimeFormat  = "20060102"
 )
 
 func getLogFilePath() string {

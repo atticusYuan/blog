@@ -31,7 +31,7 @@ func GetArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -74,7 +74,7 @@ func GetArticles(c *gin.Context) {
 
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -121,7 +121,7 @@ func AddArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -187,7 +187,7 @@ func EditArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -216,7 +216,7 @@ func DeleteArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			logging.Info("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 

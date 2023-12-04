@@ -33,7 +33,7 @@ func init() {
 	filePath := getLogFileFullPath()
 	F = openLogFile(filePath)
 	//log.New：创建一个新的日志记录器。out定义要写入日志数据的IO句柄。prefix定义每个生成的日志行的开头。flag定义了日志记录属性
-	//log.LstdFlags：日志记录的格式属性之一
+	//log.LstdFlags：日志记录的格式属性之一,标准时间格式
 	logger = log.New(F, DefaultPrefix, log.LstdFlags)
 }
 

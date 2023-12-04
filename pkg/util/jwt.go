@@ -3,6 +3,7 @@ package util
 import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"gogin/pkg/setting"
+	"time"
 	// "github.com/EDDYCJY/go-gin-example/pkg/setting"
 )
 
@@ -22,15 +23,15 @@ func (m MapClaims) Valid() 验证基于时间的声明exp, iat, nbf，注意如�
 */
 
 func GenerateToken(username, password string) (string, error) {
-	//nowTime := time.Now()
-	//expireTime := nowTime.Add(3 * time.Hour)
+	nowTime := time.Now()
+	expireTime := nowTime.Add(30000 * time.Hour)
 
 	claims := Claims{
 		username,
 		password,
 		jwt.StandardClaims{
-			//ExpiresAt: expireTime.Unix(),
-			Issuer: "gin-blog",
+			ExpiresAt: expireTime.Unix(),
+			Issuer:    "gin-blog",
 		},
 	}
 
@@ -46,6 +47,7 @@ func ParseToken(token string) (*Claims, error) {
 	})
 
 	if tokenClaims != nil {
+		//tokenClaims.Claims.(*Claims)是一个类型断言，有可能断言失败，所以存在ok这个变量，用于判断断言是否成功
 		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
 			return claims, nil
 		}
