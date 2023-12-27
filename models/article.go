@@ -12,9 +12,10 @@ type Article struct {
 	TagID int `json:"tag_id" gorm:"index"`
 	Tag   Tag `json:"tag"`
 
-	Title      string `json:"title"`
-	Desc       string `json:"desc"`
-	Content    string `json:"content"`
+	Title   string `json:"title"`
+	Desc    string `json:"desc"`
+	Content string `json:"content"`
+	//CoverImageUrl string `json:"cover_image_url"`
 	CreatedBy  string `json:"created_by"`
 	ModifiedBy string `json:"modified_by"`
 	State      int    `json:"state"`
@@ -61,10 +62,11 @@ func EditArticle(id int, data interface{}) bool {
 
 func AddArticle(data map[string]interface{}) bool {
 	db.Create(&Article{
-		TagID:     data["tag_id"].(int),
-		Title:     data["title"].(string),
-		Desc:      data["desc"].(string),
-		Content:   data["content"].(string),
+		TagID:   data["tag_id"].(int),
+		Title:   data["title"].(string),
+		Desc:    data["desc"].(string),
+		Content: data["content"].(string),
+		//CoverImageUrl: data["cover_image_url"].(string),
 		CreatedBy: data["created_by"].(string),
 		State:     data["state"].(int),
 	})
@@ -78,6 +80,11 @@ func DeleteArticle(id int) bool {
 	return true
 }
 
+func CleanAllArticle() bool {
+	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Article{})
+
+	return true
+}
 func (article *Article) BeforeCreate(scope *gorm.Scope) error {
 	scope.SetColumn("CreatedOn", time.Now().Unix())
 

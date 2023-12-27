@@ -12,6 +12,11 @@ import (
 )
 
 // GetTags 获取多个文章标签
+// @Summary 获取全部标签
+// @Produce json
+// @Param name query string false "Name"
+// @Param state query int false "State"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 func GetTags(c *gin.Context) {
 	// 从请求参数中获取标签名
 	name := c.Query("name")
@@ -35,7 +40,7 @@ func GetTags(c *gin.Context) {
 
 	code := e.SUCCESS
 	// 获取标签列表
-	data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, maps)
+	data["lists"] = models.GetTags(util.GetPage(c), setting.AppSetting.PageSize, maps)
 	// 获取符合条件的标签总数
 	data["total"] = models.GetTagTotal(maps)
 
@@ -56,7 +61,6 @@ func GetTags(c *gin.Context) {
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags [post]
 func AddTag(c *gin.Context) {
-
 	name := c.Query("name")
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
 	createdBy := c.Query("created_by")
@@ -98,7 +102,7 @@ func EditTag(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 	name := c.Query("name")
 	modifiedBy := c.Query("modified_by")
-
+	createdBy := c.Query("created_by")
 	valid := validation.Validation{}
 
 	var state int = -1
@@ -110,6 +114,7 @@ func EditTag(c *gin.Context) {
 	valid.Required(id, "id").Message("ID不能为空")
 	valid.Required(modifiedBy, "modified_by").Message("修改人不能为空")
 	valid.MaxSize(modifiedBy, 100, "modified_by").Message("修改人最长为100字符")
+	valid.MaxSize(createdBy, 100, "created_by").Message("创建人最长为100字符")
 	valid.MaxSize(name, 100, "name").Message("名称最长为100字符")
 
 	code := e.INVALID_PARAMS
@@ -118,6 +123,7 @@ func EditTag(c *gin.Context) {
 		if models.ExistTagByID(id) {
 			data := make(map[string]interface{})
 			data["modified_by"] = modifiedBy
+			data["created_by"] = createdBy
 			if name != "" {
 				data["name"] = name
 			}

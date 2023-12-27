@@ -1,0 +1,5 @@
+[WARN][upload.go:18]2023/12/21 21:30:51 [http: no such file]
+[WARN][upload.go:19]2023/12/21 21:36:34 [request Content-Type isn't multipart/form-data]
+[WARN][upload.go:19]2023/12/21 21:38:02 [http: no such file]
+[WARN][upload.go:19]2023/12/21 21:44:08 [http: no such file]
+[INFO][upload.go:31]2023/12/21 21:44:08 [必须添加图片]

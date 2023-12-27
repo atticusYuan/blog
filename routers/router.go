@@ -6,22 +6,27 @@ import (
 	_ "gogin/docs"
 	"gogin/middleware/jwt"
 	"gogin/pkg/setting"
+	"gogin/pkg/upload"
 	"gogin/routers/api"
 	v1 "gogin/routers/api/v1"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() *gin.Engine {
+
 	r := gin.New()
 
 	r.Use(gin.Logger())
 
 	r.Use(gin.Recovery())
 
-	gin.SetMode(setting.RunMode)
+	gin.SetMode(setting.ServerSetting.RunMode)
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 	r.GET("/auth", api.GetAuth)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.POST("/upload", api.UploadImage)
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())
 	{
@@ -29,6 +34,7 @@ func InitRouter() *gin.Engine {
 		apiv1.GET("/tags", v1.GetTags)
 		//新建标签
 		apiv1.POST("/tags", v1.AddTag)
+
 		//更新指定标签
 		apiv1.PUT("/tags/:id", v1.EditTag)
 		//删除指定标签

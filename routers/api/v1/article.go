@@ -69,7 +69,7 @@ func GetArticles(c *gin.Context) {
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 
-		data["lists"] = models.GetArticles(util.GetPage(c), setting.PageSize, maps)
+		data["lists"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
 		data["total"] = models.GetArticleTotal(maps)
 
 	} else {
@@ -114,6 +114,7 @@ func AddArticle(c *gin.Context) {
 			data["created_by"] = createdBy
 			data["state"] = state
 
+			//data["cover_image_url"] = upload.GetImageFullUrl(imageName)
 			models.AddArticle(data)
 			code = e.SUCCESS
 		} else {

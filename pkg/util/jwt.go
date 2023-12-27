@@ -1,13 +1,14 @@
 package util
 
 import (
+	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"gogin/pkg/setting"
 	"time"
 	// "github.com/EDDYCJY/go-gin-example/pkg/setting"
 )
 
-var jwtSecret = []byte(setting.JwtSecret)
+var jwtSecret = []byte(setting.AppSetting.JwtSecret)
 
 type Claims struct {
 	Username string `json:"username"`
@@ -24,7 +25,7 @@ func (m MapClaims) Valid() 验证基于时间的声明exp, iat, nbf，注意如�
 
 func GenerateToken(username, password string) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(30000 * time.Hour)
+	expireTime := nowTime.Add(3000 * time.Hour)
 
 	claims := Claims{
 		username,
@@ -37,7 +38,7 @@ func GenerateToken(username, password string) (string, error) {
 
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(jwtSecret)
-
+	fmt.Println("token:", setting.AppSetting.JwtSecret)
 	return token, err
 }
 

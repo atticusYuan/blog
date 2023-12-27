@@ -32,7 +32,7 @@ func ExistTagByName(name string) bool {
 }
 func ExistTagByID(id int) bool {
 	var tag Tag
-	db.Select("id").Where("id = ?", id).First(&tag)
+	db.Select("id").Where("id = ? ", id).First(&tag)
 
 	return tag.ID != 0
 }
@@ -53,6 +53,12 @@ func AddTag(name string, state int, createdBy string) bool {
 		State:     state,
 		CreatedBy: createdBy,
 	})
+
+	return true
+}
+
+func CleanAllTag() bool {
+	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Tag{})
 
 	return true
 }

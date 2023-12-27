@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"gogin/models"
+	"gogin/pkg/logging"
 	"gogin/pkg/setting"
 	"gogin/routers"
 	"log"
@@ -13,22 +15,26 @@ import (
 )
 
 func main() {
+
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+
 	router := routers.InitRouter()
 
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Addr:           fmt.Sprintf(":%d", setting.ServerSetting.HttpPort),
 		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
+		ReadTimeout:    setting.ServerSetting.ReadTimeout,
+		WriteTimeout:   setting.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
-
 	go func() {
 		if err := s.ListenAndServe(); err != nil {
 			log.Printf("Listen: %s\n", err)
 		}
 	}()
-
+	fmt.Println("Addr:", setting.ServerSetting.HttpPort)
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
