@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"gogin/models"
+	"gogin/pkg/gredis"
 	"gogin/pkg/logging"
 	"gogin/pkg/setting"
 	"gogin/routers"
@@ -19,7 +20,7 @@ func main() {
 	setting.Setup()
 	models.Setup()
 	logging.Setup()
-
+	gredis.Setup()
 	router := routers.InitRouter()
 
 	s := &http.Server{

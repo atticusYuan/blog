@@ -45,29 +45,41 @@ type Database struct {
 
 var DatabaseSetting = &Database{}
 
+type Redis struct {
+	Host        string
+	Password    string
+	MaxIdle     int
+	MaxActive   int
+	IdleTimeout time.Duration
+}
+
+var RedisSetting = &Redis{}
+
 func Setup() {
 	Cfg, err := ini.Load("conf/app.ini")
 	if err != nil {
 		log.Fatalf("Fail to parse 'conf/app.ini': %v", err)
 	}
 
-	err = Cfg.Section("app").MapTo(AppSetting)
-	if err != nil {
+	if err = Cfg.Section("app").MapTo(AppSetting); err != nil {
 		log.Fatalf("Cfg.MapTo AppSetting err: %v", err)
 	}
 
 	AppSetting.ImageMaxSize = AppSetting.ImageMaxSize * 1024 * 1024
 
-	err = Cfg.Section("server").MapTo(ServerSetting)
-	if err != nil {
+	if err = Cfg.Section("server").MapTo(ServerSetting); err != nil {
 		log.Fatalf("Cfg.MapTo ServerSetting err: %v", err)
 	}
 
 	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
 	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
+	RedisSetting.IdleTimeout = RedisSetting.IdleTimeout * time.Second
 
-	err = Cfg.Section("database").MapTo(DatabaseSetting)
-	if err != nil {
+	if err = Cfg.Section("database").MapTo(DatabaseSetting); err != nil {
 		log.Fatalf("Cfg.MapTo DatabaseSetting err: %v", err)
+	}
+
+	if err = Cfg.Section("redis").MapTo(RedisSetting); err != nil {
+		log.Fatalf("Cfg.MapTo RedisSetting err: %v", err)
 	}
 }
